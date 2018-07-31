@@ -52,13 +52,8 @@ class GitHubAppSession(Session):
 
 
     def __enter__(self):
-        print("Creating JWT")
         self.jwt = self.create_jwt()
-        print(self.jwt)
-        print("Update Session Auth with JWT")
         self.update_bearer(self.jwt)
-        print(self.headers)
-        print("Requesting Installation Token for installation {}".format(self.installation_id))
         self.request_token()
         return self
 

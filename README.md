@@ -22,6 +22,9 @@ def handle_webhook():
 
 ```
 
+## Installation
+pip install git+https://github.com/mattmorganpdx/GitHubAppSession
+
 ## Sources
 These blog posts help me get this working:
 

@@ -34,9 +34,9 @@ class GitHubAppSession(Session):
     def create_jwt(self):
         payload = {
             # Issued at time
-            'iat': datetime.now().timestamp(),
+            'iat': int(datetime.now().timestamp()),
             # JWT expiration time (10 minute maximum)
-            'exp': (datetime.now() + timedelta(minutes=9)).timestamp(),
+            'exp': int((datetime.now() + timedelta(minutes=9)).timestamp()),
             # GitHub App's identifier
             'iss': self.app_id
         }
@@ -48,7 +48,9 @@ class GitHubAppSession(Session):
             resp = self.post("https://api.github.com/installations/{}/access_tokens".format(self.installation_id))
             if resp.status_code == 201:
                 self.update_auth(resp.json().get('token'))
-                self.token_expires_at = datetime.strptime(resp.json().get('expires_at'), '%Y-%m-%dT%H:%M:%SZ') 
+                self.token_expires_at = datetime.strptime(resp.json().get('expires_at'), '%Y-%m-%dT%H:%M:%SZ')
+            else:
+                raise Exception(resp.content)
 
 
     def __enter__(self):

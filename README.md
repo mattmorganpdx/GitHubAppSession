@@ -31,3 +31,35 @@ These blog posts help me get this working:
 https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps
 
 https://developer.github.com/apps/building-your-first-github-app
+
+
+# Jama Oauth Session
+A session wrapper to perform api requests with the Jama Connect requirements management software.
+
+## Usage
+```
+from ghas import JamaOauthSession
+
+# Things you need to supply:
+# 1. The base url of your Jama Connect instance
+# 2. Oauth Client ID
+# 3. Oauth Client Secret
+
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+
+JAMA_URL = 'https://jama.mycompany.com'
+
+jama_session = JamaOauthSession(JAMA_URL, CLIENT_ID, CLIENT_SECRET)
+
+response = jama_session.get('{}/rest/v1/users/current'.format(JAMA_URL))
+user_info = response.json()
+
+print(user_info)
+
+```
+
+## Sources
+See the Jama rest documentation for more info:
+
+http://dev.jamasoftware.com/rest
